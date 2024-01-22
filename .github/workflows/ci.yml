@@ -1,0 +1,36 @@
+name: continous integration 
+
+on: # trigger workflow on the following 
+  pull_request:
+    branches:
+      - main
+
+  push:
+    branches:
+      - main
+      
+     
+  
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Install Java
+        uses: actions/setup-java@v1 
+        with:
+          java-version: "11"
+
+      - name: Build with gradle! 
+        working-directory: .
+        run: |
+          chmod +x gradlew 
+          ./gradlew build -x test
+
+      - name: Run tests 
+        working-directory: .
+        run: |
+          chmod +x gradlew 
+          ./gradlew test
